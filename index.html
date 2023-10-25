@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1"> 
+
+  <meta charset="UTF-8">
+  <title>RTL Page</title>
+  <style>
+    body {
+      background: #f1f1f1;
+      font-family: Tahoma, sans-serif;
+      text-align: center;
+    }
+    
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 50px;
+    }
+    
+    input {
+      padding: 12px 20px;
+      width: 400px;
+      font-size: 16px;
+      border: 2px solid #ccc;
+      border-radius: 4px;
+    }
+    
+    label {
+      margin: 20px 0;
+      padding: 12px 20px;
+      font-size: 24px;
+      background: #4CAF50;
+      color: white;
+      border-radius: 4px;
+    }
+    
+    button {
+      padding: 12px 20px;
+      font-size: 16px;  
+      background: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .result-group {
+  background: #4CAF50; 
+  border-radius: 4px;
+  padding: 12px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.result-group label {
+  color: white;
+  font-size: 24px; 
+}
+
+.copy-btn {
+  background: none;
+  border: 2px solid white;
+  color: white;
+  font-size: 16px;
+  padding: 4px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+@media (max-width: 600px) {
+
+  .container {
+    padding: 20px; 
+  }
+
+  input, .result-group { 
+    width: 100%;
+  }
+
+}
+
+@media (max-width: 400px) {
+
+  input {
+    font-size: 14px;
+  }
+
+  .result-group {
+    flex-direction: column;
+  }
+
+  .result-group label, 
+  .copy-btn {
+    font-size: 18px;
+  }
+  
+  .copy-btn {
+    margin-top: 10px;
+  }
+
+}
+
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <input id="numInput" type="number" placeholder="مقداری که می‌خواهید سرمایه‌گذاری کنید را به دلار وارد نمایید">
+
+    <div class="result-group">
+        <label id="resultLabel">نتیجه را در کارگزاری وارد نمایید</label>
+        <button class="copy-btn" onclick="copyResult()">کپی</button>
+      </div>
+
+  </div>
+
+  <script>
+    const input = document.getElementById('numInput');
+    const label = document.getElementById('resultLabel');
+
+    input.addEventListener('input', () => {
+      const num = parseInt(input.value);
+      const result = (num / 1000 * 0.2).toFixed(2); 
+      if(result){
+        label.textContent = result;
+      }else{
+        label.textContent = 'نتیجه را در کارگزاری وارد نمایید';
+      
+      }
+    });
+
+    function copyResult() {
+      navigator.clipboard.writeText(label.textContent);
+    }
+  </script>
+
+</body>
+</html>
