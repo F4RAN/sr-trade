@@ -25,6 +25,7 @@
       font-size: 16px;
       border: 2px solid #ccc;
       border-radius: 4px;
+      margin: 10px 0;
     }
     
     label {
@@ -46,93 +47,171 @@
       cursor: pointer;
     }
     .result-group {
-  background: #4CAF50; 
-  border-radius: 4px;
-  padding: 12px 20px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
+      background: #4CAF50; 
+      border-radius: 4px;
+      padding: 12px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
 
-.result-group label {
-  color: white;
-  font-size: 24px; 
-}
+    .result-group label {
+      color: white;
+      font-size: 24px; 
+    }
 
-.copy-btn {
-  background: none;
-  border: 2px solid white;
-  color: white;
-  font-size: 16px;
-  padding: 4px 10px;
-  border-radius: 4px;
-  cursor: pointer;
-}
+    .copy-btn {
+      background: none;
+      border: 2px solid white;
+      color: white;
+      font-size: 16px;
+      padding: 4px 10px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
 
-@media (max-width: 600px) {
+    /* New styles for maximum profit and maximum loss inputs */
+    #maxProfitInput {
+      border: 2px solid green;
+    }
 
-  .container {
-    padding: 20px; 
-  }
+    #maxLossInput {
+      border: 2px solid red;
+    } /* New styles for cards */
+    .cards {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around;
+      margin-top: 20px;
+    }
 
-  input, .result-group { 
-    width: 100%;
-  }
+    .card {
+      width: 200px;
+      border: 2px solid #ccc;
+      border-radius: 8px;
+      margin: 10px;
+      padding: 10px;
+    }
 
-}
-
-@media (max-width: 400px) {
-
-  input {
-    font-size: 14px;
-  }
-
-  .result-group {
-    flex-direction: column;
-  }
-
-  .result-group label, 
-  .copy-btn {
-    font-size: 18px;
-  }
-  
-  .copy-btn {
-    margin-top: 10px;
-  }
-
-}
-
-  </style>
+    </style>
 </head>
 <body>
 
   <div class="container">
     <input id="numInput" type="number" placeholder="مقداری که می‌خواهید سرمایه‌گذاری کنید را به دلار وارد نمایید">
-
+    <div><h3>حجم</h3></div>
     <div class="result-group">
+      
         <label id="resultLabel">نتیجه را در کارگزاری وارد نمایید</label>
         <button class="copy-btn" onclick="copyResult()">کپی</button>
       </div>
+      <input dir="ltr" id="maxProfitInput" readonly  placeholder="حداکثر سود" /><span><button style="border: 2px solid green;color: green;" class="copy-btn" onclick="copyProfitResult()">کپی</button></span>
+      <input dir="ltr" id="maxLossInput" readonly  placeholder="حداکثر ضرر" /><span><button  style="border: 2px solid red;color: red;" class="copy-btn" onclick="copyLossResult()">کپی</button></span>
+ <!-- Cards for 'سود ماهانه' -->
 
+ <div style="border: 2px lightblue solid;width: 80vw;margin:15px"></div>
+
+ <div class="card">
+  <h2>سود ماهیانه</h2>
+  <p style="color:green">بیشترین: <span id="mostInMonth">0</span></p>
+  <p style="color:orange">میانگین: <span id="avgInMonth">0</span></p>
+  <p style="color:red">کمترین: <span id="lessInMonth">0</span></p>
+</div>
+ <div class="cards">
+
+
+  <!-- Add three more similar cards for 'سود ماهانه' -->
+
+  <!-- Cards for 'سود سه ماهه' -->
+  <div class="card">
+    <h2>سود سه ماهه</h2>
+    <p style="color:green">بیشترین: <span id="mostIn3Month">0</span></p>
+    <p style="color:orange">میانگین: <span id="avgIn3Month">0</span></p>
+    <p style="color:red">کمترین: <span id="lessIn3Month">0</span></p>
+  </div>
+
+  <!-- Add three more similar cards for 'سود سه ماهه' -->
+
+  <!-- Cards for 'سود شش ماهه' -->
+  <div class="card">
+    <h2>سود شش ماهه</h2>
+    <p style="color:green">بیشترین: <span id="mostIn6Month">0</span></p>
+    <p style="color:orange">میانگین: <span id="avgIn6Month">0</span></p>
+    <p style="color:red">کمترین: <span id="lessIn6Month">0</span></p>
+  </div>
+
+  <!-- Add three more similar cards for 'سود شش ماهه' -->
+
+  <!-- Cards for 'سود سالیانه' -->
+  <div class="card">
+    <h2>سود سالیانه</h2>
+    <p style="color:green">بیشترین: <span id="mostInYear">0</span></p>
+    <p style="color:orange">میانگین: <span id="avgInYear">0</span></p>
+    <p style="color:red">کمترین: <span id="lessInYear">0</span></p>
+  </div>
+
+  <!-- Add three more similar cards for 'سود سالیانه' -->
+
+</div>
   </div>
 
   <script>
     const input = document.getElementById('numInput');
+    const maxProfitInput = document.getElementById('maxProfitInput');
+    const maxLossInput = document.getElementById('maxLossInput');
     const label = document.getElementById('resultLabel');
+    const mostInMonth = document.getElementById('mostInMonth');
+    const avgInMonth = document.getElementById('avgInMonth');
+    const lessInMonth = document.getElementById('lessInMonth');
+    const mostIn3Month = document.getElementById('mostIn3Month');
+    const avgIn3Month = document.getElementById('avgIn3Month');
+    const lessIn3Month = document.getElementById('lessIn3Month');
+    const mostIn6Month = document.getElementById('mostIn6Month');
+    const avgIn6Month = document.getElementById('avgIn6Month');
+    const lessIn6Month = document.getElementById('lessIn6Month');
+    const mostInYear = document.getElementById('mostInYear');
+    const avgInYear = document.getElementById('avgInYear');
+    const lessInYear = document.getElementById('lessInYear');
 
     input.addEventListener('input', () => {
       const num = parseInt(input.value);
-      const result = (num / 1000 * 0.2).toFixed(2); 
+      const maxProfit = parseFloat(input.value)+ " USD";
+      const maxLoss =  -(parseFloat(input.value)) + " USD";
+      const result = ((num / 1000 * 0.2)).toFixed(2); 
+      
       if(result){
         label.textContent = result;
+        maxProfitInput.value = maxProfit;
+        maxLossInput.value = maxLoss;
+        mostInMonth.textContent = (num * 0.196).toFixed(2) + "$";
+        avgInMonth.textContent = (num * (0.10 + 0.196) / 2).toFixed(2) + "$";
+        lessInMonth.textContent = (num * 0.10).toFixed(2) + "$";
+        mostIn3Month.textContent = (num * 0.196 * 3).toFixed(2) + "$";
+        avgIn3Month.textContent = (num * (0.10 + 0.196) / 2 * 3).toFixed(2) + "$";
+        lessIn3Month.textContent = (num * 0.10 * 3).toFixed(2) + "$";
+        mostIn6Month.textContent = (num * 0.196 * 6).toFixed(2) + "$";
+        avgIn6Month.textContent = (num * (0.10 + 0.196) / 2 * 6).toFixed(2) + "$";
+        lessIn6Month.textContent = (num * 0.10 * 6).toFixed(2) + "$";
+        mostInYear.textContent = (num * 0.196 * 12).toFixed(2) + "$";
+        avgInYear.textContent = (num * (0.10 + 0.196) / 2 * 12).toFixed(2) + "$";
+        lessInYear.textContent = (num * 0.10 * 12).toFixed(2) + "$";
+
+        
+
+        
       }else{
         label.textContent = 'نتیجه را در کارگزاری وارد نمایید';
-      
       }
     });
 
     function copyResult() {
       navigator.clipboard.writeText(label.textContent);
+    }
+    function copyProfitResult() {
+      navigator.clipboard.writeText(maxProfitInput.value);
+    }
+    function copyLossResult() {
+      navigator.clipboard.writeText(maxLossInput.value);
     }
   </script>
 
