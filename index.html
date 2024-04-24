@@ -29,6 +29,14 @@
       border-radius: 4px;
       margin: 10px 0;
     }
+    select {
+      padding: 12px 20px;
+      
+      font-size: 16px;
+      border: 2px solid #ccc;
+      border-radius: 4px;
+      margin: 10px 0;
+    }
     
     label {
       margin: 20px 0;
@@ -100,7 +108,17 @@
 <body>
 
   <div class="container">
-    <input id="numInput" type="number" placeholder="مقداری که می‌خواهید سرمایه‌گذاری کنید را به دلار وارد نمایید">
+    <div style="display: inline-block;">
+      <input id="numInput" type="number" placeholder="مقداری که می‌خواهید سرمایه‌گذاری کنید را به دلار وارد نمایید">
+      <div>
+        <p for="">درصد سود ( ریسک ):</p>
+        <select id="profitPercent">
+          <option value="0.9">۹٪</option>
+          <option value="0.7">۷٪</option>
+          <option value="0.5">۵٪</option>
+        </select>
+      </div>
+    </div>
     <div><h3>حجم</h3></div>
     <div class="result-group">
       
@@ -159,6 +177,7 @@
 
   <script>
     const input = document.getElementById('numInput');
+    const profitPercentSelect = document.getElementById('profitPercent')
     const maxProfitInput = document.getElementById('maxProfitInput');
     const maxLossInput = document.getElementById('maxLossInput');
     const label = document.getElementById('resultLabel');
@@ -176,7 +195,19 @@
     const lessInYear = document.getElementById('lessInYear');
 
     input.addEventListener('input', () => {
-      const num = parseInt(input.value);
+      calculate()
+    });
+
+    profitPercentSelect.addEventListener('change', () => {
+      calculate()
+    })
+
+    function calculate(){
+      
+      let num = parseInt(input.value);
+      const profitPercent = parseFloat(profitPercentSelect.value);
+      num = profitPercent * num;
+      console.log(profitPercent, num)
       const maxProfit = parseFloat(input.value)+ " USD";
       const maxLoss =  -(parseFloat(input.value)) + " USD";
       const result = ((num / 1000 * 0.2)).toFixed(2); 
@@ -204,7 +235,7 @@
       }else{
         label.textContent = 'نتیجه را در کارگزاری وارد نمایید';
       }
-    });
+    }
 
     function copyResult() {
       navigator.clipboard.writeText(label.textContent);
