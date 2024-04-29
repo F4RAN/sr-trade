@@ -103,6 +103,25 @@
       padding: 10px;
     }
 
+  .profit-button {
+    background-color: #f1f1f1;
+    border: none;
+    color: black;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+  }
+
+  .profit-button.active {
+    background-color: #4CAF50;
+    color: white;
+  }
+
+
     </style>
 </head>
 <body>
@@ -112,13 +131,19 @@
       <p style="margin-bottom:0">سرمایه ورودی:</p>
       <input id="numInput" type="number" placeholder="مثال: 1000">
     </div>
-    <div>
+    <!-- <div>
       <p for="" style="margin-bottom:0">درصد سود ( ریسک ):</p>
       <select id="profitPercent">
         <option value="0.9">۹٪</option>
         <option value="0.7">۷٪</option>
         <option value="0.5">۵٪</option>
       </select>
+    </div> -->
+    <p for="" style="margin-bottom:10px">میانگین سود ماهانه:</p>
+    <div>
+      <button class="profit-button active" data-value="0.9">۹٪</button>
+      <button class="profit-button" data-value="0.7">۷٪</button>
+      <button class="profit-button" data-value="0.5">۵٪</button>
     </div>
   </div>
   <div class="container">
@@ -180,8 +205,12 @@
   </div>
 
   <script>
+    const profitButtons = document.querySelectorAll('.profit-button');
+  
+
+    let profitPercentSelect = 0.9;
     const input = document.getElementById('numInput');
-    const profitPercentSelect = document.getElementById('profitPercent')
+    // const profitPercentSelect = document.getElementById('profitPercent')
     const maxProfitInput = document.getElementById('maxProfitInput');
     const maxLossInput = document.getElementById('maxLossInput');
     const label = document.getElementById('resultLabel');
@@ -198,18 +227,29 @@
     const avgInYear = document.getElementById('avgInYear');
     const lessInYear = document.getElementById('lessInYear');
 
+    profitButtons.forEach(button => {
+    button.addEventListener('click', function() {
+      profitButtons.forEach(btn => btn.classList.remove('active'));
+      this.classList.add('active');
+      profitPercentSelect = parseFloat(this.getAttribute('data-value'));
+      calculate()
+      
+    });
+  });
+
     input.addEventListener('input', () => {
       calculate()
     });
 
-    profitPercentSelect.addEventListener('change', () => {
-      calculate()
-    })
+    // profitPercentSelect.addEventListener('change', () => {
+    //   calculate()
+    // })
 
     function calculate(){
       
       let num = parseInt(input.value);
-      const profitPercent = parseFloat(profitPercentSelect.value);
+      const profitPercent = parseFloat(profitPercentSelect);
+      console.log(profitPercent)
       num = profitPercent * num;
       console.log(profitPercent, num)
       const maxProfit = parseFloat(input.value)+ " USD";
@@ -220,6 +260,7 @@
         label.textContent = result;
         maxProfitInput.value = maxProfit;
         maxLossInput.value = maxLoss;
+        num = num * 0.7
         mostInMonth.textContent = (num * 0.196).toFixed(2) + "$";
         avgInMonth.textContent = (num * (0.10 + 0.196) / 2).toFixed(2) + "$";
         lessInMonth.textContent = (num * 0.10).toFixed(2) + "$";
